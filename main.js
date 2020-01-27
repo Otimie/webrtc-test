@@ -31,3 +31,8 @@ function placeAPhoneCall(phoneNumber) {
 		console.error("Error Placing call", error);
 	});
 }
+
+function formSubmit(event) {
+	event.preventDefault();
+	placeAPhoneCall(document.getElementById('phoneNumber'));
+}
