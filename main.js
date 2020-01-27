@@ -8,6 +8,7 @@ const clientId = 'c09753f7-587a-43b8-875e-f060c8dd3272';
 const redirectUri = 'https://otimie.github.io/webrtc-test/index.html';
 
 client.loginImplicitGrant(clientId, redirectUri).then(() => {
+	console.log('HERE!!!');
 	const sdk = new window.PureCloudWebrtcSdk({
 		accessToken: client.authData.accessToken,
 		environment: 'mypurecloud.com.au'
