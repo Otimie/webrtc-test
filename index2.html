@@ -17,7 +17,7 @@
 				var event = JSON.parse(message.data);
 				console.log(event);
 				
-				pc.setRemoteDescription(directive.payload.offer).then(() => {
+				pc.setRemoteDescription(event.directive.payload.offer).then(() => {
 					return pc.createAnswer();
 				}).then(() => {
 					return pc.setLocalDescription()
