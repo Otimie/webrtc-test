@@ -2,7 +2,13 @@
 <html>
 	<head>
 		<script>
-			pc = new RTCPeerConnection();
+			pc = new RTCPeerConnection({
+				iceServers: [
+					{
+						urls: 'stuns:stun.l.google.com:19302'
+					}
+				]
+			});
 
 			const socket = new WebSocket('wss://34-220-94-79.lachlanb.me:8080');
 			
