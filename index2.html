@@ -17,6 +17,10 @@
 					console.log(event);
 				};
 				
+				pc.ontrack = () => {
+					console.log('pc.ontrack');
+				};
+				
 				stream.getTracks().forEach((track) => {
 					console.log('--TRACK--');
 					pc.addTrack(track, stream);
