@@ -21,6 +21,10 @@
 					console.log('pc.ontrack');
 				};
 				
+				pc.onicegatheringstatechange = () => {
+					console.log('pc.onicegatheringstatechange');
+				};
+				
 				stream.getTracks().forEach((track) => {
 					console.log('--TRACK--');
 					pc.addTrack(track, stream);
