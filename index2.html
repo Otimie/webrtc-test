@@ -50,6 +50,7 @@
 							// Wait for null candidate (ICE gathering has finished)
 							if (!event.candidate) {
 								console.log('Null Candidate');
+								console.log('sending ' + JSON.stringify(pc.localDescription));
 								socket.send(JSON.stringify(pc.localDescription));
 							}
 						};
