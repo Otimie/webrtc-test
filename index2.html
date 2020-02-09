@@ -11,6 +11,12 @@
 						}
 					]
 				});
+				
+				pc.onconnectionstatechange = (event) => {
+					console.log('pc.onconnectionstatechange');
+					console.log(event);
+				};
+				
 				stream.getTracks().forEach((track) => {
 					console.log('--TRACK--');
 					pc.addTrack(track, stream);
