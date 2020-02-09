@@ -14,7 +14,7 @@
 				
 				pc.onconnectionstatechange = (event) => {
 					console.log('pc.onconnectionstatechange');
-					console.log(event);
+					console.log(pc.connectionState);
 				};
 				
 				pc.ontrack = () => {
