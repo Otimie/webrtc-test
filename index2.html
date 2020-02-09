@@ -2,11 +2,15 @@
 <html>
 	<head>
 		<script>
+			pc = new RTCPeerConnection();
+
 			const socket = new WebSocket('wss://34-220-94-79.lachlanb.me:8080');
 			
 			socket.addEventListener('message', function (message) {
 				console.log(JSON.parse(message.data));
 			});
+			
+			
 		</script>
 	</head>
 	<body>
