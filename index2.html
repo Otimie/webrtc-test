@@ -22,12 +22,16 @@
 					sdp: event.directive.payload.offer.value
 				}).then(() => {
 					return pc.createAnswer();
+				}).then((answer) => {
+					return pc.setLocalDescription(answer);
 				}).then(() => {
-					return pc.setLocalDescription()
-				}).then(() => {
-					socket.send(JSON.stringify({
-						sdp: pc.localDescription
-					}));
+					pc.onicecandidate = (event) => {
+						// Wait for null candidate (ICE gathering has finished)
+						if (!event.candidate) {
+							console.log('Null Candidate');
+							socket.send(JSON.stringify(pc.localDescription));
+						}
+					};
 				});
 			});
 			
