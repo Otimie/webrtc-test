@@ -3,43 +3,41 @@
 	<head>
 		<script>
 			navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-				console.log(stream);
-			});
-			
-			const pc = new RTCPeerConnection({
-				iceServers: [
-					{
-						urls: 'stun:stun.l.google.com:19302'
-					}
-				]
-			});
-
-			const socket = new WebSocket('wss://34-220-94-79.lachlanb.me:8080');
-			
-			socket.addEventListener('message', function (message) {
 				
-				var event = JSON.parse(message.data);
-				console.log(event);
-				
-				pc.setRemoteDescription({
-					type: 'offer',
-					sdp: event.directive.payload.offer.value
-				}).then(() => {
-					return pc.createAnswer();
-				}).then((answer) => {
-					return pc.setLocalDescription(answer);
-				}).then(() => {
-					pc.onicecandidate = (event) => {
-						// Wait for null candidate (ICE gathering has finished)
-						if (!event.candidate) {
-							console.log('Null Candidate');
-							socket.send(JSON.stringify(pc.localDescription));
+				const pc = new RTCPeerConnection({
+					iceServers: [
+						{
+							urls: 'stun:stun.l.google.com:19302'
 						}
-					};
+					]
+				});
+				pc.addTrack(stream)
+
+				const socket = new WebSocket('wss://34-220-94-79.lachlanb.me:8080');
+
+				socket.addEventListener('message', function (message) {
+
+					var event = JSON.parse(message.data);
+					console.log(event);
+
+					pc.setRemoteDescription({
+						type: 'offer',
+						sdp: event.directive.payload.offer.value
+					}).then(() => {
+						return pc.createAnswer();
+					}).then((answer) => {
+						return pc.setLocalDescription(answer);
+					}).then(() => {
+						pc.onicecandidate = (event) => {
+							// Wait for null candidate (ICE gathering has finished)
+							if (!event.candidate) {
+								console.log('Null Candidate');
+								socket.send(JSON.stringify(pc.localDescription));
+							}
+						};
+					});
 				});
 			});
-			
-			
 		</script>
 	</head>
 	<body>
