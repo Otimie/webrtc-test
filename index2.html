@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<script>
-			pc = new RTCPeerConnection({
+			const pc = new RTCPeerConnection({
 				iceServers: [
 					{
 						urls: 'stuns:stun.l.google.com:19302'
@@ -17,7 +17,15 @@
 				var event = JSON.parse(message.data);
 				console.log(event);
 				
-				pc.setRemoteDescription(directive.payload.offer);
+				pc.setRemoteDescription(directive.payload.offer).then(() => {
+					return pc.createAnswer();
+				}).then(() => {
+					return pc.setLocalDescription()
+				}).then(() => {
+					socket.send(JSON.stringify({
+						sdp: pc.localDescription
+					}));
+				});
 			});
 			
 			
