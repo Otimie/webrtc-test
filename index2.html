@@ -2,7 +2,9 @@
 <html>
 	<head>
 		<script>
-			navigator.mediaDevices.getUserMedia({ audio: true });
+			navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+				console.log(stream);
+			});
 			
 			const pc = new RTCPeerConnection({
 				iceServers: [
