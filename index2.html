@@ -3,7 +3,7 @@
 	<head>
 	</head>
 	<body>
-		<audio id="receivedAudio"></audio>
+		<audio id="receivedAudio" autoplay controls></audio>
 		<script>
 			navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
 				
