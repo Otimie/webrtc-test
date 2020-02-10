@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	</head>
+	<body>
+		<audio id="receivedAudio"></audio>
 		<script>
 			navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
 				
@@ -19,6 +22,7 @@
 				
 				pc.ontrack = () => {
 					console.log('pc.ontrack');
+					document.getElementById("receivedAudio").srcObject = event.streams[0];
 				};
 				
 				pc.onicegatheringstatechange = () => {
@@ -58,7 +62,5 @@
 				});
 			});
 		</script>
-	</head>
-	<body>
 	</body>
 </html>
