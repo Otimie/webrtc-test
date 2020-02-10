@@ -20,7 +20,7 @@
 					console.log(pc.connectionState);
 				};
 				
-				pc.ontrack = () => {
+				pc.ontrack = (event) => {
 					console.log('pc.ontrack');
 					document.getElementById("receivedAudio").srcObject = event.streams[0];
 				};
