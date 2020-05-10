@@ -39,12 +39,12 @@
 
 				socket.addEventListener('message', function (message) {
 
-					var event = JSON.parse(message.data);
-					console.log(event);
+					var alexa = JSON.parse(message.data);
+					console.log(alexa);
 
 					pc.setRemoteDescription({
 						type: 'offer',
-						sdp: event.directive.payload.offer.value
+						sdp: alexa.directive.payload.offer.value
 					}).then(() => {
 						return pc.createAnswer();
 					}).then((answer) => {
@@ -57,7 +57,7 @@
 								
 								let toSend = JSON.stringify({
 									action: 'answer',
-									alexa: event,
+									alexa: alexa,
 									browser: pc.localDescription
 								});
 								
