@@ -54,11 +54,16 @@
 							// Wait for null candidate (ICE gathering has finished)
 							if (!event.candidate) {
 								console.log('Null Candidate');
-								console.log('sending ' + JSON.stringify(pc.localDescription));
-								socket.send(JSON.stringify({
+								
+								let toSend = JSON.stringify({
 									action: 'answer',
-									data: pc.localDescription
-								}));
+									alexa: event,
+									browser: pc.localDescription
+								});
+								
+								console.log('Sending:', toSend);
+								
+								socket.send(toSend);
 							}
 						};
 					});
