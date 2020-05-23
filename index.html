@@ -18,8 +18,11 @@
 				console.log(data);
 				
 				switch(data.action) {
+					
+					let pc;
+					
 					case 'broadcast':
-						let pc = pcs[message.connectionId] = new RTCPeerConnection({
+						pc = pcs[message.connectionId] = new RTCPeerConnection({
 							iceServers: [
 								{
 									urls: 'stun:stun.l.google.com:19302'
@@ -39,7 +42,7 @@
 						
 						break
 					case 'offer':
-						let pc = pcs[message.connectionId] = new RTCPeerConnection({
+						pc = pcs[message.connectionId] = new RTCPeerConnection({
 							iceServers: [
 								{
 									urls: 'stun:stun.l.google.com:19302'
