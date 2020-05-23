@@ -17,10 +17,9 @@
 				let data = JSON.stringify(event.data);
 				console.log(data);
 				
-				switch(data.action) {
-					
-					let pc = null;
-					
+				let pc;
+				
+				switch(data.action) {					
 					case 'broadcast':
 						pc = pcs[message.connectionId] = new RTCPeerConnection({
 							iceServers: [
