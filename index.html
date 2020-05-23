@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<script>
+			let pcs = {};
+			
 			const socket = new WebSocket('wss://add8j1ntf0.execute-api.ap-southeast-2.amazonaws.com/production');
 			
 			socket.addEventListener('open', (event) => {
@@ -12,9 +14,20 @@
 			});
 			
 			socket.addEventListener('message', (event) => {
-				console.log(event.data);
+				let data = JSON.stringify(event.data);
+				console.log(data);
 				
-				let pc = new RTCPeerConnection({
+				switch(data.action) {
+					case 'broadcast':
+						break
+					case 'offer':
+						break
+					case 'answer':
+						break
+				}
+				
+				
+				let pc = pcs[message.connectionId] = new RTCPeerConnection({
 					iceServers: [
 						{
 							urls: 'stun:stun.l.google.com:19302'
@@ -27,7 +40,7 @@
 				}).then(() => {
 					socket.send(JSON.stringify({
 						action: 'offer',
-						targetConnectionId: '',
+						connectionId: message.connectionId,
 						sdp: pc.localDescription
 					}));
 				});
