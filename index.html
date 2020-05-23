@@ -19,31 +19,60 @@
 				
 				switch(data.action) {
 					case 'broadcast':
+						let pc = pcs[message.connectionId] = new RTCPeerConnection({
+							iceServers: [
+								{
+									urls: 'stun:stun.l.google.com:19302'
+								}
+							]
+						});
+
+						pc.createOffer().then((offer) => {
+							return pc.setLocalDescription(offer);
+						}).then(() => {
+							socket.send(JSON.stringify({
+								action: 'offer',
+								connectionId: message.connectionId,
+								sdp: pc.localDescription
+							}));
+						});
+						
 						break
 					case 'offer':
+						let pc = pcs[message.connectionId] = new RTCPeerConnection({
+							iceServers: [
+								{
+									urls: 'stun:stun.l.google.com:19302'
+								}
+							]
+						});
+						
+						pc.setRemoteDescription().then(() => {
+							return pc.createAnswer();
+						}).then((answer) => {
+							return pc.setLocalDescription(answer);
+						}).then(() => {
+							pc.onicecandidate = (event) => {
+								if (!event.candidate) {
+									socket.send(JSON.stringify({
+										action: 'answer',
+										sdp: pc.localDescription
+									}));
+								}
+							};
+						});
+						
 						break
 					case 'answer':
+						pcs[message.connectionId].setRemoteDescription().then(() => {
+							console.log('setRemoteDescription');
+						});
+						
 						break
 				}
 				
 				
-				let pc = pcs[message.connectionId] = new RTCPeerConnection({
-					iceServers: [
-						{
-							urls: 'stun:stun.l.google.com:19302'
-						}
-					]
-				});
 				
-				pc.createOffer().then((offer) => {
-					return pc.setLocalDescription(offer);
-				}).then(() => {
-					socket.send(JSON.stringify({
-						action: 'offer',
-						connectionId: message.connectionId,
-						sdp: pc.localDescription
-					}));
-				});
 			});
 		</script>
 	</head>
