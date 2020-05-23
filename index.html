@@ -34,7 +34,7 @@
 						}).then(() => {
 							socket.send(JSON.stringify({
 								action: 'offer',
-								connectionId: message.connectionId,
+								connectionId: data.connectionId,
 								sdp: pc.localDescription
 							}));
 						});
