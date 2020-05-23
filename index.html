@@ -32,9 +32,12 @@
 						pc.createOffer().then((offer) => {
 							return pc.setLocalDescription(offer);
 						}).then(() => {
+							console.log('LocalDescription set');
+							
 							pc.onicecandidate = (event) => {
 								if (!event.candidate) {
 									console.log('null candidate');
+									
 									socket.send(JSON.stringify({
 										action: 'offer',
 										connectionId: data.connectionId,
@@ -59,6 +62,8 @@
 						}).then((answer) => {
 							return pc.setLocalDescription(answer);
 						}).then(() => {
+							console.log('LocalDescription set');
+							
 							pc.onicecandidate = (event) => {
 								if (!event.candidate) {
 									console.log('null candidate');
@@ -79,8 +84,6 @@
 						
 						break
 				}
-				
-				
 				
 			});
 		</script>
