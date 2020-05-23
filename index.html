@@ -32,11 +32,16 @@
 						pc.createOffer().then((offer) => {
 							return pc.setLocalDescription(offer);
 						}).then(() => {
-							socket.send(JSON.stringify({
-								action: 'offer',
-								connectionId: data.connectionId,
-								sdp: pc.localDescription
-							}));
+							pc.onicecandidate = (event) => {
+								if (!event.candidate) {
+									console.log('null candidate');
+									socket.send(JSON.stringify({
+										action: 'offer',
+										connectionId: data.connectionId,
+										sdp: pc.localDescription
+									}));
+								}
+							};
 						});
 						
 						break
@@ -56,7 +61,7 @@
 						}).then(() => {
 							pc.onicecandidate = (event) => {
 								if (!event.candidate) {
-									console.log('Send answer');
+									console.log('null candidate');
 									
 									socket.send(JSON.stringify({
 										action: 'answer',
