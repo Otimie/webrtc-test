@@ -49,7 +49,7 @@
 							]
 						});
 						
-						pc.setRemoteDescription().then(() => {
+						pc.setRemoteDescription(data.sdp).then(() => {
 							return pc.createAnswer();
 						}).then((answer) => {
 							return pc.setLocalDescription(answer);
