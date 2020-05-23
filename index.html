@@ -56,6 +56,8 @@
 						}).then(() => {
 							pc.onicecandidate = (event) => {
 								if (!event.candidate) {
+									console.log('Send answer');
+									
 									socket.send(JSON.stringify({
 										action: 'answer',
 										sdp: pc.localDescription
