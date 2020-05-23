@@ -4,13 +4,33 @@
 		<script>
 			const socket = new WebSocket('wss://add8j1ntf0.execute-api.ap-southeast-2.amazonaws.com/production');
 			
-			socket.addEventListener('open', function (event) {
-				socket.send('Hello Server!');
+			socket.addEventListener('open', (event) => {
+				socket.send(JSON.stringify({
+					action: 'join',
+					meetingId: 'example'
+				}));
 			});
-
-			// Listen for messages
-			socket.addEventListener('message', function (event) {
-				console.log('Message from server ', event.data);
+			
+			socket.addEventListener('message', (event) => {
+				console.log(event.data);
+				
+				let pc = new RTCPeerConnection({
+					iceServers: [
+						{
+							urls: 'stun:stun.l.google.com:19302'
+						}
+					]
+				});
+				
+				pc.createOffer().then((offer) => {
+					return pc.setLocalDescription(offer);
+				}).then(() => {
+					socket.send(JSON.stringify({
+						action: 'offer',
+						targetConnectionId: '',
+						sdp: pc.localDescription
+					}));
+				});
 			});
 		</script>
 	</head>
