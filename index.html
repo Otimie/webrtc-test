@@ -19,7 +19,7 @@
 				
 				switch(data.action) {
 					
-					let pc;
+					let pc = null;
 					
 					case 'broadcast':
 						pc = pcs[message.connectionId] = new RTCPeerConnection({
