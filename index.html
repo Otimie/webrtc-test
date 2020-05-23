@@ -14,7 +14,7 @@
 			});
 			
 			socket.addEventListener('message', (event) => {
-				let data = JSON.stringify(event.data);
+				let data = JSON.parse(event.data);
 				console.log(data);
 				
 				let pc;
