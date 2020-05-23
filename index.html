@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			const socket = new WebSocket('wss://add8j1ntf0.execute-api.ap-southeast-2.amazonaws.com/production');
+			
+			socket.addEventListener('open', function (event) {
+				socket.send('Hello Server!');
+			});
+
+			// Listen for messages
+			socket.addEventListener('message', function (event) {
+				console.log('Message from server ', event.data);
+			});
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
