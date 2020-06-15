@@ -5,8 +5,9 @@
 	<body>
 		<audio id="receivedAudio" autoplay controls></audio>
 		<script>
-			navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-				
+			navigator.mediaDevices.getUserMedia({
+				audio: true
+			}).then((stream) => {
 				const pc = new RTCPeerConnection({
 					iceServers: [
 						{
@@ -37,7 +38,7 @@
 
 				const socket = new WebSocket('wss://1rx3pmok8i.execute-api.us-west-2.amazonaws.com/production');
 
-				socket.addEventListener('message', function (message) {
+				socket.addEventListener('message', (message) => {
 
 					var alexa = JSON.parse(message.data);
 					console.log(alexa);
